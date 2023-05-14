@@ -41,7 +41,7 @@ export class AuthController {
       'Returns user details and JWT token upon successful registration',
     type: UserRegister,
   })
-  @ApiResponse({ status: 400, description: 'Bad Request' })
+  @ApiResponse({ status: 400, description: 'User already exist' })
   @ApiResponse({ status: 500, description: 'Internal Server Error' })
   async register(
     @Body() userDto: RegisterDto,

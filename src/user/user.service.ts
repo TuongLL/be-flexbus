@@ -37,6 +37,11 @@ export class UserService {
       const { password, ...response }: User = await this.userModel
         .findByIdAndUpdate(id, { ...updateInfo })
         .lean();
+      if (!response)
+        return {
+          code: HttpStatus.NOT_FOUND,
+          message: ERROR_EXCEPTION.NOT_FOUND,
+        };
       return {
         code: HttpStatus.OK,
         message: SUCCESS_EXCEPTION.OK,
