@@ -40,16 +40,19 @@ export class AuthService {
       };
     }
 
-    throw new HttpException(
-      ERROR_EXCEPTION.LOGIN_FAILED,
-      HttpStatus.BAD_REQUEST,
-    );
+    return {
+      message: ERROR_EXCEPTION.LOGIN_FAILED,
+      code: HttpStatus.UNAUTHORIZED,
+    };
   }
 
   async register(userDto: RegisterDto): Promise<ResponseStatus<UserRegister>> {
     const user = await this.userModel.findOne({ email: userDto.email });
     if (user) {
-      throw new HttpException('User already exist', HttpStatus.BAD_REQUEST);
+      return {
+        message: ERROR_EXCEPTION.USER_EXIST,
+        code: HttpStatus.BAD_REQUEST,
+      };
     }
 
     const otp = phoneNumberToken(6, { type: 'string' });
