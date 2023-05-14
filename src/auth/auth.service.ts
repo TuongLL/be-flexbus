@@ -6,7 +6,7 @@ import { ERROR_EXCEPTION, ResponseStatus, SUCCESS_EXCEPTION } from 'types';
 import { v4 as uuidv4 } from 'uuid';
 import { compare, hashPassword } from 'utils';
 import { JwtService } from '@nestjs/jwt';
-import { LoginDto, RegisterDto } from './dto';
+import { LoginDto, RegisterDto, SendOtpDto } from './dto';
 import { UserLogin, UserRegister } from './types';
 import * as phoneNumberToken from 'generate-sms-verification-code';
 
@@ -71,13 +71,7 @@ export class AuthService {
     };
   }
 
-  async otpVerify({
-    email,
-    otp,
-  }: {
-    email: string;
-    otp: string;
-  }): Promise<ResponseStatus<null>> {
+  async otpVerify({ email, otp }: SendOtpDto): Promise<ResponseStatus<null>> {
     const user: UserDocument = await this.userModel.findOne({ email }).lean();
     if (otp != user.otp) {
       console.log(otp, user);

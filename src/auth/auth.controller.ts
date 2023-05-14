@@ -2,7 +2,7 @@ import { Controller, Post, Body } from '@nestjs/common';
 import { ApiTags, ApiResponse, ApiOperation } from '@nestjs/swagger';
 import { ResponseStatus } from '../../types';
 import { AuthService } from './auth.service';
-import { LoginDto, RegisterDto } from './dto';
+import { LoginDto, RegisterDto, SendOtpDto } from './dto';
 import { UserLogin, UserRegister } from './types';
 
 @Controller('auth')
@@ -15,9 +15,7 @@ export class AuthController {
   @ApiResponse({ status: 200, description: 'OTP verified successfully' })
   @ApiResponse({ status: 400, description: 'Bad Request' })
   @ApiResponse({ status: 500, description: 'Internal Server Error' })
-  async otpVerify(
-    @Body() dto: { email: string; otp: string },
-  ): Promise<ResponseStatus<null>> {
+  async otpVerify(@Body() dto: SendOtpDto): Promise<ResponseStatus<null>> {
     return await this.authService.otpVerify(dto);
   }
 
