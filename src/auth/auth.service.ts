@@ -74,19 +74,21 @@ export class AuthService {
     };
   }
 
-  async otpVerify({ email, otp }: SendOtpDto): Promise<ResponseStatus<null>> {
+  async otpVerify({ email, otp }: SendOtpDto): Promise<ResponseStatus<User>> {
     const user: UserDocument = await this.userModel.findOne({ email }).lean();
     if (otp != user.otp) {
-      console.log(otp, user);
       return {
         code: HttpStatus.UNAUTHORIZED,
         message: ERROR_EXCEPTION.UNAUTHORIZED,
       };
     }
-    await this.userModel.findByIdAndUpdate(user._id, { active: true });
+    const user_res = await this.userModel
+      .findByIdAndUpdate(user._id, { active: true })
+      .lean();
     return {
       code: HttpStatus.OK,
       message: SUCCESS_EXCEPTION.OK,
+      data: user_res,
     };
   }
 }

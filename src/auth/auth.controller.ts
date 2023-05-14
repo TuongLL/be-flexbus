@@ -4,6 +4,7 @@ import { ResponseStatus } from '../../types';
 import { AuthService } from './auth.service';
 import { LoginDto, RegisterDto, SendOtpDto } from './dto';
 import { UserLogin, UserRegister } from './types';
+import { User } from 'entities/user.entity';
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -15,7 +16,7 @@ export class AuthController {
   @ApiResponse({ status: 200, description: 'OTP verified successfully' })
   @ApiResponse({ status: 400, description: 'Bad Request' })
   @ApiResponse({ status: 500, description: 'Internal Server Error' })
-  async otpVerify(@Body() dto: SendOtpDto): Promise<ResponseStatus<null>> {
+  async otpVerify(@Body() dto: SendOtpDto): Promise<ResponseStatus<User>> {
     return await this.authService.otpVerify(dto);
   }
 
