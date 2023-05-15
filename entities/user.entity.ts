@@ -10,7 +10,7 @@ export class User {
     example: 'John Doe',
     description: 'The name of the user',
   })
-  @Prop()
+  @Prop({ default: null })
   name: string;
 
   @ApiProperty({
