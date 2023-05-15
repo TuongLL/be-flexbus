@@ -54,4 +54,25 @@ export class UserService {
       };
     }
   }
+
+  async deleteUserAccount(id: string): Promise<ResponseStatus<null>> {
+    try {
+      const user = await this.userModel.findByIdAndDelete(id);
+      if (user) {
+        return {
+          code: HttpStatus.OK,
+          message: SUCCESS_EXCEPTION.OK,
+        };
+      }
+      return {
+        code: HttpStatus.NOT_FOUND,
+        message: ERROR_EXCEPTION.NOT_FOUND,
+      };
+    } catch (err) {
+      return {
+        code: HttpStatus.INTERNAL_SERVER_ERROR,
+        message: ERROR_EXCEPTION.INTERNAL_SERVER_ERROR,
+      };
+    }
+  }
 }

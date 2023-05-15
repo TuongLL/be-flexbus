@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Patch, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  UseGuards,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from 'entities/user.entity';
 import { ResponseStatus } from 'types';
@@ -48,5 +56,20 @@ export class UserController {
     @Body() dto: UpdateUserDto,
   ): Promise<ResponseStatus<Omit<User, 'password'>>> {
     return this.userService.updateUserProfile(dto);
+  }
+
+  @Delete(':id')
+  @Delete(':id')
+  @ApiOperation({ summary: 'Delete user account' })
+  @ApiResponse({
+    status: 200,
+    description: 'Returns null upon successful deletion',
+    type: null,
+  })
+  @ApiResponse({ status: 400, description: 'Bad request' })
+  @ApiResponse({ status: 404, description: 'User not found' })
+  @ApiResponse({ status: 500, description: 'Internal server error' })
+  deleteUserAccount(@Param('id') id: string): Promise<ResponseStatus<null>> {
+    return this.userService.deleteUserAccount(id);
   }
 }
