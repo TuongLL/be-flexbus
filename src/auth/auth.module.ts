@@ -20,7 +20,7 @@ import { MailModule } from 'src/mail/mail.module';
     JwtModule.registerAsync({
       useFactory: () => ({
         secret: process.env.SECRET_JWT,
-        signOptions: { expiresIn: '60s' },
+        signOptions: { expiresIn: '10h' },
       }),
     }),
     MailModule,
