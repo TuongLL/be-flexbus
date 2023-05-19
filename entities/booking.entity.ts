@@ -26,6 +26,14 @@ export class Booking {
   })
   userId: string;
 
+  @Prop()
+  @IsNotEmpty()
+  @ApiProperty({
+    description: 'The transaction group ID of the booking',
+    example: '60a1b52f3d1aaf00115d7236',
+  })
+  transactionGroup: string;
+
   @Prop({ type: Object })
   @ApiProperty({
     description: 'Information about the bus being booked',
@@ -72,14 +80,6 @@ export class Booking {
     },
   })
   busInfo: any;
-
-  @Prop()
-  @IsNotEmpty()
-  @ApiProperty({
-    description: 'The payment method used for the booking',
-    example: 'Credit Card',
-  })
-  method: string;
 
   @Prop()
   @ApiProperty({

@@ -28,16 +28,28 @@ export class BookingService {
     }
   }
 
-  async getUserBooking(userId: string): Promise<ResponseStatus<Booking[]>> {
+  async getUserBooking(userId: string): Promise<ResponseStatus<Booking[][]>> {
     try {
       const response: Booking[] = await this.bookingModel
         .find({ userId })
         .lean();
       if (!isEmpty(response)) {
+        const groupedBooking: Booking[][] = Object.values(
+          response.reduce((acc, element) => {
+            const { transactionGroup } = element;
+            if (acc[transactionGroup]) {
+              acc[transactionGroup].push(element);
+            } else {
+              acc[transactionGroup] = [element];
+            }
+            return acc;
+          }, {}),
+        );
+
         return {
           code: HttpStatus.OK,
           message: SUCCESS_EXCEPTION.OK,
-          data: response,
+          data: groupedBooking,
         };
       }
       return {

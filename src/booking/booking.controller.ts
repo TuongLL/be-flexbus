@@ -79,7 +79,7 @@ export class BookingController {
   @ApiResponse({ status: 500, description: 'Internal server error' })
   getUserBooking(
     @Param('userId') userId: string,
-  ): Promise<ResponseStatus<Booking[]>> {
+  ): Promise<ResponseStatus<Booking[][]>> {
     return this.bookingService.getUserBooking(userId);
   }
 }

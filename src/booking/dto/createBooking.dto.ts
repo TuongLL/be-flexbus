@@ -11,6 +11,13 @@ export class CreateBookingDto {
   userId: string;
 
   @IsNotEmpty()
+  @ApiProperty({
+    description: 'The transaction group ID of the booking',
+    example: '60a1b52f3d1aaf00115d7236',
+  })
+  transactionGroup: string;
+
+  @IsNotEmpty()
   @IsObject()
   @ApiProperty({
     description: 'The information about the bus being booked',
