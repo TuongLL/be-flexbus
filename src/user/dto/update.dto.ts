@@ -20,6 +20,14 @@ export class UpdateUserDto {
 
   @IsOptional()
   @ApiPropertyOptional({
+    example: '2019382',
+    description: 'The student number of the user (if applicable)',
+    default: null,
+  })
+  student_no?: string;
+
+  @IsOptional()
+  @ApiPropertyOptional({
     type: String,
     description: 'The gender of the user',
     enum: ['male', 'female', 'other'],
